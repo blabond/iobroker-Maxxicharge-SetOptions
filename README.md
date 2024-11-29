@@ -23,7 +23,7 @@ Dieses Skript ermöglicht die einfache Verwaltung der MaxxiCharge-CCU über ioBr
 
      ```javascript
      const config = {
-         IP: "192.168.101.62", // Ersetze durch die IP-Adresse oder maxxi.local
+         IP: "maxxi.local", // Ersetze durch die IP-Adresse oder maxxi.local
          namespace: "javascript.0.MaxxiChargeSettings", // Namespace für die Datenpunkte
      };
      ```
