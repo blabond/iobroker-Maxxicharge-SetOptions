@@ -1,0 +1,79 @@
+// Konfiguration
+const config = {
+    IP: "maxxi.local", // Hier die IP des MaxxiCharge CCU eingeben
+    namespace: "javascript.0.MaxxiChargeSettings", // Namespace für die Datenpunkte
+};
+
+
+// Array mit den Datenpunkten und Beschreibungen
+const datapoints = [
+    { id: 'maxOutputPower', description: 'Maximalen CCU Watt-Leistung', type: 'number', min: 200, max: 1800, default: 1800 },
+    { id: 'offlinePower', description: 'Rückfallebene Stromabgabe bei Verbindungsverlust', type: 'number', min: 100, max: 600, default: 200 },
+    { id: 'baseLoad', description: 'Wert um den der Stromzähler korrigiert werden soll', type: 'number', min: -300, max: 300, default: 0 },
+    { id: 'threshold', description: 'Reaktionstoleranz', type: 'number', min: 10, max: 150, default: 30 },
+    { id: 'minSOC', description: 'Minimale Entladung der Batterie', type: 'number', min: 2, max: 90, default: 15 },
+    { id: 'maxSOC', description: 'Maximale Akkuladung', type: 'number', min: 30, max: 100, default: 97 },
+    { id: 'dcAlgorithm', description: 'Steuerungsverhalten der CCU nach Base oder Forced', type: 'number', states: { 1: 'Basic (0.38)', 2: 'Forced (0.40+)' }, default: 1 },
+];
+
+
+// Funktion zum Erstellen von Datenpunkten
+function createDatapoints() {
+    datapoints.forEach((dp) => {
+        const fullPath = `${config.namespace}.${dp.id}`;
+        if (!existsState(fullPath)) {
+            createState(fullPath, dp.default || 0, {
+                name: dp.description,
+                type: dp.type,
+                min: dp.min || undefined,
+                max: dp.max || undefined,
+                states: dp.states || undefined,
+                def: dp.default || 0,
+                read: true,
+                write: true,
+            });
+            console.log(`Datenpunkt erstellt: ${fullPath} - Standardwert: ${dp.default || 0}`);
+        }
+    });
+}
+
+// Funktion zum Senden von Werten an die CCU
+async function updateConfig(key, value) {
+    const axios = require('axios');
+    try {
+        const response = await axios.post(`http://${config.IP}/config`, `${key}=${value}`, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Referer': `http://${config.IP}/`,
+            },
+        });
+        console.log(`Wert ${key} wurde auf ${value} gesetzt.`);
+    } catch (error) {
+        console.error(`Fehler beim Setzen von ${key}: ${error.message}`);
+    }
+}
+
+// Änderungen an Datenpunkten überwachen und an die CCU senden
+datapoints.forEach((dp) => {
+    on({ id: `${config.namespace}.${dp.id}`, change: 'ne' }, (obj) => {
+        const value = obj.state.val;
+
+        // Validierung des Wertes
+        if (dp.min !== undefined && value < dp.min) {
+            setState(obj.id, dp.min, true);
+            console.log(`Wert für ${dp.id} zu klein, auf Minimum ${dp.min} gesetzt.`);
+            return;
+        }
+        if (dp.max !== undefined && value > dp.max) {
+            setState(obj.id, dp.max, true);
+            console.log(`Wert für ${dp.id} zu groß, auf Maximum ${dp.max} gesetzt.`);
+            return;
+        }
+
+        // Wert an die CCU senden
+        updateConfig(dp.id, value);
+    });
+});
+
+// Datenpunkte erstellen
+createDatapoints();
