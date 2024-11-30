@@ -6,6 +6,7 @@ Dieses Skript ermöglicht die einfache Verwaltung der MaxxiCharge-CCU über ioBr
 
 - **ioBroker** ist installiert und läuft.
 - Der **JavaScript-Adapter** in ioBroker ist aktiv.
+- im Javascript-Adapter unter Einstellung **NPM-Module** muss **axios** eintragen sein.
 
 ## Installation
 
@@ -16,7 +17,7 @@ Dieses Skript ermöglicht die einfache Verwaltung der MaxxiCharge-CCU über ioBr
 2. **Skript hinzufügen**
    - Öffne den **JavaScript-Editor** unter **Skripte**.
    - Erstelle ein neues Skript (Typ `JavaScript`).
-   - Kopiere den Inhalt des Skripts aus diesem Repository in den Editor.
+   - Kopiere den Inhalt des Skripts aus **MaxxiCharge_SetSettings.txt** in den Editor.
 
 3. **Konfiguration anpassen**
    - Passe die IP-Adresse oder den Hostnamen der MaxxiCharge-CCU im Skript an:
