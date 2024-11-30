@@ -1,6 +1,6 @@
 # MaxxiCharge Einstellungen für ioBroker
 
-Dieses Skript ermöglicht die einfache Verwaltung der MaxxiCharge-CCU über ioBroker. Es erstellt automatisch die benötigten Datenpunkte und sendet Änderungen direkt an die CCU, um die Konfiguration zu aktualisieren.
+Dieses Skript ermöglicht die einfache Verwaltung der MaxxiCharge-CCU über ioBroker ab Version 0.42. Es erstellt automatisch die benötigten Datenpunkte und sendet Änderungen direkt an die CCU, um die Konfiguration zu aktualisieren.
 
 ## Voraussetzungen
 
