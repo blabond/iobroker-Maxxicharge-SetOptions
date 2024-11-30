@@ -7,13 +7,13 @@ const config = {
 
 // Array mit den Datenpunkten und Beschreibungen
 const datapoints = [
-    { id: 'maxOutputPower', description: 'Maximalen CCU Watt-Leistung', type: 'number', min: 200, max: 1800, default: 1800 },
-    { id: 'offlinePower', description: 'Rückfallebene Stromabgabe bei Verbindungsverlust', type: 'number', min: 100, max: 600, default: 200 },
+    { id: 'maxOutputPower', description: 'Maximalen CCU Watt-Leistung', type: 'number', min: 200, max: 1800, default: 0 },
+    { id: 'offlinePower', description: 'Rückfallebene Stromabgabe bei Verbindungsverlust', type: 'number', min: 100, max: 600, default: 0 },
     { id: 'baseLoad', description: 'Wert um den der Stromzähler korrigiert werden soll', type: 'number', min: -300, max: 300, default: 0 },
-    { id: 'threshold', description: 'Reaktionstoleranz', type: 'number', min: 10, max: 150, default: 30 },
-    { id: 'minSOC', description: 'Minimale Entladung der Batterie', type: 'number', min: 2, max: 90, default: 15 },
-    { id: 'maxSOC', description: 'Maximale Akkuladung', type: 'number', min: 30, max: 100, default: 97 },
-    { id: 'dcAlgorithm', description: 'Steuerungsverhalten der CCU nach Base oder Forced', type: 'number', states: { 1: 'Basic (0.38)', 2: 'Forced (0.40+)' }, default: 1 },
+    { id: 'threshold', description: 'Reaktionstoleranz', type: 'number', min: 10, max: 150, default: 0 },
+    { id: 'minSOC', description: 'Minimale Entladung der Batterie', type: 'number', min: 2, max: 90, default: 0 },
+    { id: 'maxSOC', description: 'Maximale Akkuladung', type: 'number', min: 30, max: 100, default: 0 },
+    { id: 'dcAlgorithm', description: 'Steuerungsverhalten der CCU nach Base oder Forced', type: 'number', states: { 1: 'Basic (0.38)', 2: 'Forced (0.40+)' }, default: 0 },
 ];
 
 
